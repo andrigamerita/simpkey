@@ -1,27 +1,27 @@
 extends _base
 
 block content
-    h2 ヘルプ
-    p Simpkey を使う上でよく聞かれそうな質問をまとめて回答する、なんとまあえらいページです
-    h3 タイムラインが止まってる気がする
-    p Simpkey はリアルタイムでタイムラインが動きません。投稿やリアクションをしたときのように、ページが再読込されないと最新のタイムラインが表示されないのです。
-    p ホーム ローカル などのボタンを手動で押すことでタイムラインを読み直すことができるはずなのでそれでお願いします。
-        span(style="font-size: 0.8em; opacity: 0.4") 昔は手動リロードが当たり前だったんじゃよ（老害）
-    h3 CW って何？
-    p ノートの本文を隠す機能です。注釈を添えることができるので、ちょっとキツい話をする上での注意書きとか、袋とじとか、一発ギャグとかに使ってください。
-    p なお、注釈欄を埋めても CW のチェックボックスを切っていると適用されないので、くれぐれも確認を忘れないように
-    h3 ハッシュタグが「ページが見つかりませんでした」と表示される
-    p 未実装なんです。ごめんなさい
-    h3 ノートの時間の前についている絵文字は何？
-    p ノートの公開範囲を表すマークです。それぞれ次のような意味があります。
-    ul
-        li 🌐 - パブリック。誰でも見られる公開範囲
-        li 🏠 - ホーム。投稿主のフォロワーのタイムラインと、自分のユーザーページにのみ表示されます。
-        li 🔒 - フォロワー。投稿主のフォロワーのタイムラインにのみ表示されます。
-        li ✉️ - ダイレクト。指定した人のタイムラインにのみ表示されます。つまりあなた宛ということです。
-        li ❓ - 不明。Groundpolis など、特殊仕様の Misskey インスタンスにログインしていると見られるかもしれません。
-        li ☣ - ローカル限定。同じホストの人だけが見られる投稿です。
-    h3 Simpkey という名前の由来は？
-    p Simple + Misskey
-    h3 その他
-    p その他困ったことがあったら @ebi@misskey.io 宛にメンションで質問すれば答えます
+	h2 Help
+	p This is a great page to answer frequently asked questions about using Simpkey!
+	h3 I feel like the timeline is stuck.
+	p Simpkey does not have a real-time timeline. The latest timeline is not displayed until the page is reloaded, like when you make a post or a reaction.
+	p You should be able to reload the timeline by manually pressing a button such as home local, so please do that. 
+		span(style="font-size:0.8em; opacity:0.4") (Manual reloading used to be the norm.)
+	h3 What is CW?
+	p It is a function to hide the body of a note. It can be used to add annotations, so use it for notes on slightly harsh stories, baggage, one-shot gags, and so on.
+	p Note that even if you fill in the annotation field, it will not be applied if the CW checkbox is unchecked, so please do not forget to check it!
+	h3 Hashtags are displayed as "Page not found".
+	p It's not implemented yet. Sorry.
+	h3 What is the emoji before the time in the note?
+	p These are marks that indicate the extent of the note's publication. They have the following meanings respectively.
+	ul
+		li 🌐 - Public. Public range that anyone can see.
+		li 🏠 - Home. Only visible on the timeline of the poster's followers and on their own user page.
+		li 🔒 - Followers. Shows only on the timeline of the poster's followers.
+		li ✉️ - Direct. Appears only on the timeline of the person you specify. This means it is addressed to you.
+		li ❓ - Unknown; may be seen if you are logged into a specially designed instance of Misskey, such as Groundpolis.
+		li ☣️ - Local only. Posts that can only be seen by people on the same host.
+	h3 What is the origin of the name Simpkey?
+	p Simple + Misskey
+	h3 Other
+	p If you have any other problems, you can ask @ebi@misskey.io with a menshion and I'll answer!

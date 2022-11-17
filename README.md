@@ -2,24 +2,19 @@
 
 **Use misskey without JavaScript 🥴**
 
-Simpkey is a HTML-Form based server-side-processing misskey client.
+_English-translated fork - Original Japanese repo at <https://github.com/EbiseLutica/simpkey>_
 
-It is suitable if you are using a legacy computer, or you are not prefer to enable JavaScript.
+Simpkey is a HTML-Form based server-side-processing Misskey client.  
+It is suitable if you're using a legacy computer, or you prefer not to enable JavaScript.
 
-## build
+## Usage
 
-```
-# ???????????
-yarn install
+```sh
+yarn install # Get dependencies
+yarn build # Get
 
-# ????????
-yarn build
-
-# ???????
-yarn start
-
-# watch ????????????????????
-yarn watch
+yarn start # Finally, run normally
+yarn watch # Finally, run in development status (with hot reload)
 ```
 
 ## LICENSE

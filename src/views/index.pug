@@ -1,16 +1,16 @@
 extends _base
 
 block content
-    p Simpkey へようこそ
-    p 使用するインスタンス、ユーザー名、パスワードを入力して、今すぐ始めましょう。
+    p Welcome to Simpkey
+    p To get started, enter your login data.
     form(action="/", method="post")
-        div: label インスタンス名: 
+        div: label Instance Domain:
             input(type="text", name="host", placeholder="例: misskey.io")
-        div: label ユーザー名: 
+        div: label Username:
             input(type="text", name="username")
-        div: label パスワード: 
+        div: label Password:
             input(type="password", name="password")
-        div: label 2段階認証コード (必要なら): 
+        div: label 2FA Code (if needed):
             input(type="text", name="token")
-        p ログインする前に下部の「利用規約」「プライバシーポリシー」「ヘルプ」には目を通しておいてください。
-        button(type="submit") ログイン
+        p Before logging in, please read the "Terms of Use", "Privacy Policy", and "Help" at the bottom.
+        button(type="submit") Login!

@@ -7,11 +7,11 @@ import { die } from './die';
 export const router = new Router<DefaultState, Context>();
 
 const staticRouting = [
-	[ 'about', 'Simpkey について' ],
-	[ 'terms', '利用規約' ],
-	[ 'privacy-policy', 'プライバシーポリシー' ],
-	[ 'settings', '設定' ],
-	[ 'help', 'ヘルプ' ],
+	[ 'about', 'About Simpkey' ],
+	[ 'terms', 'Terms of Use' ],
+	[ 'privacy-policy', 'Privacy Policy' ],
+	[ 'settings', 'Settings' ],
+	[ 'help', 'Help' ],
 ];
 
 for (const [ name, title ] of staticRouting) {
@@ -46,21 +46,21 @@ router.get('/', async ctx => {
 		return;
 	}
 
-	await timeline(ctx, host, 'notes/timeline', 'ホームタイムライン', token);
+	await timeline(ctx, host, 'notes/timeline', 'Home Timeline', token);
 });
 
 router.get('/ltl', async ctx => {
 	const token = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!token || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 	const meta = await api<any>(host, 'meta', { i: token });
 	if (meta.disableLocalTimeline) {
-		await die(ctx, 'ローカルタイムラインは無効化されています');
+		await die(ctx, 'Local timeline has been disabled');
 	} else {
-		await timeline(ctx, host, 'notes/local-timeline', 'ローカルタイムライン', token);
+		await timeline(ctx, host, 'notes/local-timeline', 'Local Timeline', token);
 	}
 });
 
@@ -68,14 +68,14 @@ router.get('/stl', async ctx => {
 	const token = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!token || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 	const meta = await api<any>(host, 'meta', { i: token });
 	if (meta.disableLocalTimeline) {
-		await die(ctx, 'ソーシャルタイムラインは無効化されています');
+		await die(ctx, 'Social timeline has been disabled');
 	} else {
-		await timeline(ctx, host, 'notes/hybrid-timeline', 'ソーシャルタイムライン', token);
+		await timeline(ctx, host, 'notes/hybrid-timeline', 'Social Timeline', token);
 	}
 });
 
@@ -83,15 +83,15 @@ router.get('/gtl', async ctx => {
 	const token = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!token || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 
 	const meta = await api<any>(host, 'meta', { i: token });
 	if (meta.disableGlobalTimeline) {
-		await die(ctx, 'グローバルタイムラインは無効化されています');
+		await die(ctx, 'Global timeline has been disabled');
 	} else {
-		await timeline(ctx, host, 'notes/global-timeline', 'グローバルタイムライン', token);
+		await timeline(ctx, host, 'notes/global-timeline', 'Global Timeline', token);
 	}
 });
 
@@ -99,7 +99,7 @@ router.get('/notifications', async ctx => {
 	const token = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!token || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 
@@ -117,7 +117,7 @@ router.get('/renote/:noteId', async ctx => {
 	const token = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!token || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 
@@ -137,7 +137,7 @@ router.get('/reply/:noteId', async ctx => {
 	const token = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!token || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 
@@ -153,7 +153,7 @@ router.get('/react/:noteId', async ctx => {
 	const token = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!token || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 
@@ -174,7 +174,7 @@ router.get('/@:acct', async ctx => {
 	const token = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!token || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 
@@ -201,7 +201,7 @@ router.post('/', async ctx => {
 		token
 	} = ctx.request.body;
 	if (!host || !username || !password) {
-		await die(ctx, 'パラメータが足りません');
+		await die(ctx, 'Some parameters are missing. Please retry.');
 		return;
 	}
 	try {
@@ -221,7 +221,7 @@ router.post('/action/:action', async ctx => {
 	const i = ctx.cookies.get('i');
 	const host = ctx.cookies.get('host');
 	if (!i || !host) {
-		await die(ctx, 'ログインしてください');
+		await die(ctx, 'Please login');
 		return;
 	}
 
@@ -242,7 +242,7 @@ router.post('/action/:action', async ctx => {
 		case 'react': {
 			const { noteId, reaction, customReaction } = ctx.request.body;
 			if (!noteId) throw new Error('noteId required');
-			if (!reaction) throw new Error('絵文字が指定されていません');
+			if (!reaction) throw new Error('No emoji was specified');
 			await api(host, 'notes/reactions/create', { i, noteId, reaction: reaction === 'custom' ? customReaction : reaction });
 			break;
 		}
@@ -270,5 +270,5 @@ router.post('/logout', ctx => {
 // Return 404 for other pages
 router.all('(.*)', async ctx => {
 	ctx.status = 404;
-	await die(ctx, 'ページが見つかりませんでした');
+	await die(ctx, 'Resource not found');
 });

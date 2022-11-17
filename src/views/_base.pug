@@ -1,32 +1,32 @@
 include _components
 
 html
-    head
-        meta(charset="UTF-8")
-        link(href='https://unpkg.com/sanitize.css' rel='stylesheet')
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        block meta
-        title= title
-        style.
-            body {
-                font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-                padding: 16px;
-            }
-    body
-        header
-            h1: a(href="/") Simpkey
-            block header
-        main
-            block content
+	head
+		meta(charset="UTF-8")
+		link(href='https://unpkg.com/sanitize.css' rel='stylesheet')
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		block meta
+		title= title
+		style.
+			body {
+				font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+				padding: 16px;
+			}
+	body
+		header
+			h1: a(href="/") Simpkey
+			block header
+		main
+			block content
 
-        footer
-            hr
-            div
-                a(href="/privacy-policy") プライバシーポリシー
-                | ・
-                a(href="/terms") 利用規約
-                | ・
-                a(href="/help") ヘルプ
-            p (C)2020 Xeltica - 
-                a(href="/about") version #{version}
-            block footer
+		footer
+			hr
+			div
+				a(href="/privacy-policy") Privacy Policy
+				| ・
+				a(href="/terms") Terms of Use
+				| ・
+				a(href="/help") Help
+			p (C) 2020 Xeltica, 2022 OctoSpacc ・ 
+				a(href="/about") v#{version}
+			block footer

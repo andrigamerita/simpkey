@@ -2,10 +2,10 @@ extends _base
 
 block content
     if canRenote
-        h2 このノートをリノートしますか？
+        h2 Want to renote this note?
         +sub-note(note)
-        +post-form('/action/create-note', "コメント(省略可能)", "リノート")
+        +post-form('/action/create-note', "Comment (optional)", "Renote")
             input(type="hidden", name="renoteId", value=note.id)
     else
-        h2 このノートはリノートできません
+        h2 This note can't be renoted
         +sub-note(note)

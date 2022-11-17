@@ -1,20 +1,21 @@
 
 mixin avatar(user)
-    img.avatar(src=user.avatarUrl, alt="avatar for " + user.username style="width: 64px; height: 64px; border-radius: 50%")&attributes(attributes)
+    img.avatar(src=user.avatarUrl, alt="Avatar for " + user.username style="width:64px; height:64px; border-radius:50%;")&attributes(attributes)
 
 mixin note-header(note)
     header&attributes(attributes)
         a(href="/" + getAcct(note.user))
             span.name= getUserName(note.user)
-            span.acct(style="color: gray")= getAcct(note.user)
+            spamn &nbsp;
+            span.acct(style="color:gray;")= getAcct(note.user)
         if note.user.isAdmin
-            span.bot [ADMIN]
+            span.bot  [ADMIN]
         else if note.user.isModerator
-            span.bot [MOD]
+            span.bot  [MOD]
         if note.user.isBot
-            span.bot [BOT]
+            span.bot  [BOT]
         if note.user.isCat
-            span.bot [CAT]
+            span.bot  [CAT]
 
 mixin sub-note(note)
     .sub-note
@@ -33,9 +34,11 @@ mixin sub-note(note)
 
 mixin note(note)
     if note.reply
-        +sub-note(note.reply)(style="opacity: 0.5")
+        +sub-note(note.reply)(style="opacity:0.5;")
     if note.renote && !note.text
-        p: b 🔁 #{getUserName(note.user)} がRenote
+        p
+            b 🔁 #{getUserName(note.user)}
+            span  renoted
         +note(note.renote)
     else
         .note&attributes(attributes)
@@ -61,16 +64,16 @@ mixin note(note)
                     span(class=(key === note.myReaction ? 'my reaction' : 'reaction'))=`${key} ${val}`
             footer
                 |[
-                a(href="/reply/" + note.id) 返信 #{note.repliesCount}
-                |]
+                a(href="/reply/" + note.id) #{note.repliesCount} Replies
+                |] 
                 if canRenote && canRenote(note)
                     |[
-                    a(href="/renote/" + note.id) リノート #{note.renoteCount}
-                    |]
+                    a(href="/renote/" + note.id) #{note.renoteCount} Renotes
+                    |] 
                 if canReact && canReact(note)
                     if !note.myReaction
                         | [
-                        a(href="/react/" + note.id) リアクション
+                        a(href="/react/" + note.id) React
                         | ]
                     else
                         form(action="action/unreact", method="post" style="display: inline")
@@ -81,61 +84,60 @@ mixin post-form(url, placeholder, buttonText)
     form(action=url, method="post")
         div: label
             input(type="checkbox", name="useCw")
-            span CW
-        input(type="text", name="cw" placeholder="注釈(省略可能)" style="max-width: 100%; min-width: 100%;")
-        textarea(name="text", placeholder=placeholder style="max-width: 100%; min-width: 100%; height: 6em; margin-bottom: 8px")
+            span  CW
+        input(type="text", name="cw" placeholder="Title/Warning (optional)" style="max-width:100%; min-width:100%;")
+        textarea(name="text", placeholder=placeholder style="max-width:100%; min-width:100%; height:6em; margin-bottom:8px;")
 
-        div: label 公開範囲: 
+        div: label Privacy: 
             select(name="visibility")
-                option(value="public") パブリック
-                option(value="home") ホーム
-                option(value="followers") フォロワー
-                option(value="direct") ダイレクト
+                option(value="public") Public
+                option(value="home") Home
+                option(value="followers") Followers
+                option(value="direct") Direct
         button(type="submit")= buttonText
         block
 
 mixin nav()
     div
         |[
-        a(href="/") ホーム
+        a(href="/") Home
         |] [
-        a(href="/ltl") ローカル
+        a(href="/ltl") Local
         |] [
-        a(href="/stl") ソーシャル
+        a(href="/stl") Social
         |] [
-        a(href="/gtl") グローバル
+        a(href="/gtl") Global
         |] [
-        a(href="/notifications") 通知
+        a(href="/notifications") Notifications
         |] [
-        a(href="/settings") 設定
+        a(href="/settings") Settings
         |]
 
 mixin user-header(user, detail = false)
     if detail
         if user.host
-            .remote-caution ⚠ リモートのアカウントにつき、情報が正確では無い可能性があります。
-                a(href=user.url || user.uri, target="_blank", rel="noopener noreferrer") リモートで確認する
+            .remote-caution ⚠️ Information may not be accurate for remote accounts. 
+                a(href=user.url || user.uri, target="_blank", rel="noopener noreferrer") Open on remote instance
         if user.isSuspended
-            .suspended ⚠ このアカウントは凍結されています
+            .suspended ⚠️ This account has been suspended.
         if user.isSilenced
-            .silenced ⚠ このアカウントはサイレンスされています
+            .silenced ⚠️ This account has been silenced.
     +avatar(user)
     .name: b=getUserName(user)
         | &nbsp;
         span(style="color: gray")= getAcct(user)
         if user.isFollowed
             span.is-followed フォローされています
-
         if user.isLocked
             span.lock
         if user.isAdmin
-            span.bot [ADMIN]
+            span.bot  [ADMIN]
         else if user.isModerator
-            span.bot [MOD]
+            span.bot  [MOD]
         if user.isBot
-            span.bot [BOT]
+            span.bot  [BOT]
         if user.isCat
-            span.bot [CAT]
+            span.bot  [CAT]
     if detail
         if user.description
             .description !{mfmToHtml(user.description)}
@@ -144,20 +146,21 @@ mixin user-header(user, detail = false)
         if user.location
             .birthday 📍#{user.location}
         if user.sex
-            .sex 性別: #{user.sex}
+            .sex Gender: #{user.sex}
         dl
             each field in user.fields
                 dt !{mfmToHtml(field.name)}
                 dd !{mfmToHtml(field.value)}
                 
     .count
-        a.notes(href="/" + getAcct(user)) #{user.notesCount} ノート
-        |  
+        |[
+        a.notes(href="/" + getAcct(user)) #{user.notesCount} Notes
+        |]  
         //- a.following(href="/" + getAcct(user) + "/following") 
-        | #{user.followingCount} フォロー
+        | [#{user.followingCount} Following]
         |  
         //- a.followers(href="/" + getAcct(user) + "/followers")
-        | #{user.followersCount} フォロワー
+        | [#{user.followersCount} Followers]
 
 mixin timeline(notes)
     each note in notes
